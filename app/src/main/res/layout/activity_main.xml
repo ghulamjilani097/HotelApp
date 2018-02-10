@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.memor.thinkers.jilani.hotelapp.MainActivity"
-    android:background="@drawable/splash">
+    android:background="#000">
 
 
     <EditText
         android:id="@+id/firstname"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/username"
         android:layout_centerHorizontal="true"
@@ -18,7 +18,7 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/pass"
         android:layout_alignStart="@+id/pass"
@@ -27,15 +27,13 @@
         android:hint="Username" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="password"
         android:gravity="center"
         android:layout_centerInParent="true"
         android:id="@+id/pass" />
-
-
 
     <Button
         android:layout_width="wrap_content"
