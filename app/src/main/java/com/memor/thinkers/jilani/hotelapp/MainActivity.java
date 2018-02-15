@@ -43,19 +43,25 @@ public class MainActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerUser();
+                //registerUser();
+                Intent i=new Intent(MainActivity.this,Homepage.class);
+                startActivity(i);
+                finish();
             }
         });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUser();
+                Intent i=new Intent(MainActivity.this,Homepage.class);
+                startActivity(i);
+                finish();
+                //loginUser();
             }
         });
     }
 
-    public void registerUser()
+    /*public void registerUser()
     {
         user1=name.getText().toString();
         pass1=password.getText().toString();
@@ -87,5 +93,5 @@ public class MainActivity extends AppCompatActivity {
     public  void loginUser()
     {
 
-    }
+    }*/
 }
