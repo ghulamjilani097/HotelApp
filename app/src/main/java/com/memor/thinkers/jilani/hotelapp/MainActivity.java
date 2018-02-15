@@ -3,17 +3,23 @@ package com.memor.thinkers.jilani.hotelapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button signup,login;
     EditText name,password,email;
     String user1,pass1,email1;
-    String urlRegister="";
+    String urlRegister="https://app-1518721639.000webhostapp.com/JilaniApi/v1/Api.php?apicall=createsignup";
     String urlLogin="";
     RequestQueue requestQueue;
 
@@ -38,15 +44,16 @@ public class MainActivity extends AppCompatActivity {
         password=(EditText)findViewById(R.id.pass);
         email=(EditText)findViewById(R.id.email);
 
-        requestQueue= Volley.newRequestQueue(this);
+//        requestQueue= Volley.newRequestQueue(this);
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //registerUser();
-                Intent i=new Intent(MainActivity.this,Homepage.class);
-                startActivity(i);
-                finish();
+                registerUser();
+//                Toast.makeText(MainActivity.this, "jilani", Toast.LENGTH_SHORT).show();
+//                Intent i=new Intent(MainActivity.this,Homepage.class);
+//                startActivity(i);
+//                finish();
             }
         });
 
@@ -61,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*public void registerUser()
+    public void registerUser()
     {
         user1=name.getText().toString();
         pass1=password.getText().toString();
@@ -70,6 +77,18 @@ public class MainActivity extends AppCompatActivity {
         StringRequest stringRequest=new StringRequest(Request.Method.POST, urlRegister, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
+                try {
+                    JSONArray jsonArray=new JSONArray(response);
+                    JSONObject jsonObject=jsonArray.getJSONObject(0);
+                    String abc=jsonObject.getString("message");
+
+                    Toast.makeText(MainActivity.this, ""+abc, Toast.LENGTH_SHORT).show();
+                    Log.d("dorami123", "onResponse: "+abc);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -80,18 +99,20 @@ public class MainActivity extends AppCompatActivity {
         })
         {
             @Override
-            public Map<String, String> getParams() {
+            public Map<String, String> getParams() throws AuthFailureError{
                 Map<String, String> params = new HashMap<String, String>();
+                Toast.makeText(MainActivity.this, "Jilani", Toast.LENGTH_SHORT).show();
                 params.put("name", user1);
                 params.put("email", email1);
-                params.put("password", pass1);
+                params.put("phone", pass1);
                 return params;
             }
         };
+        com.memor.thinkers.jilani.hotelapp.Request.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    public  void loginUser()
-    {
-
-    }*/
+//    public  void loginUser()
+//    {
+//
+//    }*/
 }
