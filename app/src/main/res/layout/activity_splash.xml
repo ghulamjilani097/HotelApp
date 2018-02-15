@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
     tools:context="com.memor.thinkers.jilani.hotelapp.Splash">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="JILANI"
-        android:textColor="#ffff"/>
+        android:text="Splash"
+        android:textColor="#000"
+        android:textSize="50dp"
+        android:gravity="center"/>
 
 </android.support.constraint.ConstraintLayout>

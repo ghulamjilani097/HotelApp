@@ -24,7 +24,6 @@
         android:layout_above="@+id/pass"
         android:layout_alignStart="@+id/pass"
         android:layout_marginBottom="27dp"
-        android:gravity="center"
         android:hint="Email" />
 
     <EditText
@@ -32,7 +31,6 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="password"
-        android:gravity="center"
         android:layout_centerInParent="true"
         android:id="@+id/pass" />
 
