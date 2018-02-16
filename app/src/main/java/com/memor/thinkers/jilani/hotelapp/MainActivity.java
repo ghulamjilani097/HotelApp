@@ -49,11 +49,12 @@ public class MainActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerUser();
+//                registerUser();
 //                Toast.makeText(MainActivity.this, "jilani", Toast.LENGTH_SHORT).show();
-//                Intent i=new Intent(MainActivity.this,Homepage.class);
-//                startActivity(i);
-//                finish();
+                Intent i=new Intent(MainActivity.this,Homepage.class);
+                startActivity(i);
+                Log.d("dorami123", "onClick: "+"abc");
+                finish();
             }
         });
 
