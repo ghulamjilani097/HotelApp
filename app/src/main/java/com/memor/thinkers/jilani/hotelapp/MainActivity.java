@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*login.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(MainActivity.this,Homepage.class);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 //loginUser();
             }
-        });*/
+        });
     }
 
     public void registerUser()
