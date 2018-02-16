@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,8 +60,6 @@ public class Homepage extends AppCompatActivity
         }
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener(){
-            //parameters GPS or Network provider,min time,min distance,location listener.
-            //0 means default
             @Override
             public void onLocationChanged(Location location)
             {
@@ -71,11 +70,11 @@ public class Homepage extends AppCompatActivity
                 Geocoder geocoder=new Geocoder(Homepage.this);
                 try{
                     List<Address> address=geocoder.getFromLocation(latitude,longitude,1);
-                    String locality=address.get(0).getLocality();
                     String pinCode=address.get(0).getPostalCode();
                     String fulladdress=address.get(0).getAddressLine(0);
 
                     location1.append(fulladdress+", "+pinCode);
+                    Log.e("Location: ",(fulladdress+" "+pinCode));
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -96,10 +95,10 @@ public class Homepage extends AppCompatActivity
     private void setupTabIcons()
     {
         tabLayout.getTabAt(0).setIcon(R.drawable.location).setText("Near Me");
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_launcher_background).setText("Explore");
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_launcher_background).setText("Cart");
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_launcher_background).setText("Account");
-        tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher_background).setText("Favorite");
+        tabLayout.getTabAt(1).setIcon(R.drawable.explore).setText("Explore");
+        tabLayout.getTabAt(2).setIcon(R.drawable.cart).setText("Cart");
+        tabLayout.getTabAt(3).setIcon(R.drawable.account).setText("Account");
+        tabLayout.getTabAt(4).setIcon(R.drawable.favorite).setText("Favorite");
 
     }
     private void setupViewPager(ViewPager viewPager)
