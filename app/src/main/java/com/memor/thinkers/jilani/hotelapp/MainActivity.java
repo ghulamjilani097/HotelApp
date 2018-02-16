@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button signup,login;
     EditText name,password,email;
     String user1,pass1,email1;
-    String urlRegister="https://app-1518721639.000webhostapp.com/JilaniApi/v1/Api.php?apicall=createsignup";
+    String urlRegister="https://hamarahotel.000webhostapp.com/registration/hotelregistration.php";
     String urlLogin="";
     RequestQueue requestQueue;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         password=(EditText)findViewById(R.id.pass);
         email=(EditText)findViewById(R.id.email);
 
-//        requestQueue= Volley.newRequestQueue(this);
+        requestQueue= Volley.newRequestQueue(this);
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
+        /*login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(MainActivity.this,Homepage.class);
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 //loginUser();
             }
-        });
+        });*/
     }
 
     public void registerUser()
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONArray jsonArray=new JSONArray(response);
                     JSONObject jsonObject=jsonArray.getJSONObject(0);
-                    String abc=jsonObject.getString("message");
+                    String abc=jsonObject.getString("msg");
 
                     Toast.makeText(MainActivity.this, ""+abc, Toast.LENGTH_SHORT).show();
                     Log.d("dorami123", "onResponse: "+abc);
@@ -101,14 +101,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getParams() throws AuthFailureError{
                 Map<String, String> params = new HashMap<String, String>();
-                Toast.makeText(MainActivity.this, "Jilani", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Jilani", Toast.LENGTH_SHORT).show();
                 params.put("name", user1);
                 params.put("email", email1);
-                params.put("phone", pass1);
+                params.put("password", pass1);
                 return params;
             }
         };
-        com.memor.thinkers.jilani.hotelapp.Request.getInstance(this).addToRequestQueue(stringRequest);
+        requestQueue.add(stringRequest);
     }
 
 //    public  void loginUser()
