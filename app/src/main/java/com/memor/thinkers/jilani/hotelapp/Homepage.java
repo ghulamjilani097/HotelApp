@@ -19,6 +19,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.IOException;
 import java.util.ArrayList;
         import java.util.List;
 
@@ -29,6 +32,8 @@ public class Homepage extends AppCompatActivity
     ViewPager viewPager;
     TextView location1;
     LocationManager locationManager;
+    double latitude,longitude;
+    String fulladdress,pinCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,43 +58,73 @@ public class Homepage extends AppCompatActivity
 
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!=
                 PackageManager.PERMISSION_GRANTED &&ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
+        {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION},0);         //string array for multiple permissions.
             return;                 //if allow return true, if deny return false.
         }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener(){
-            @Override
-            public void onLocationChanged(Location location)
-            {
-                double latitude=location.getLatitude();
-                double longitude=location.getLongitude();
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+        {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location)
+                {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    Geocoder geocoder = new Geocoder(getApplicationContext());
+                    try {
+                        List<Address> addressList = geocoder.getFromLocation(latitude,longitude, 1);
+                        fulladdress= addressList.get(0).getAddressLine(0);
+                        pinCode=addressList.get(0).getPostalCode();
 
-                //now convert latitude and longitude into address.
-                Geocoder geocoder=new Geocoder(Homepage.this);
-                try{
-                    List<Address> address=geocoder.getFromLocation(latitude,longitude,1);
-                    String pinCode=address.get(0).getPostalCode();
-                    String fulladdress=address.get(0).getAddressLine(0);
-
-                    location1.append(fulladdress+", "+pinCode);
-                    Log.e("Location: ",(fulladdress+" "+pinCode));
+                        location1.setText(fulladdress+", "+pinCode);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-                catch (Exception e){
-                    e.printStackTrace();
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+                @Override
+                public void onProviderEnabled(String provider) {}
+
+                @Override
+                public void onProviderDisabled(String provider) {}
+            });
+        }
+        else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location)
+                {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    Geocoder geocoder = new Geocoder(getApplicationContext());
+                    try {
+                        List<Address> addressList = geocoder.getFromLocation(latitude,longitude, 1);
+                        fulladdress= addressList.get(0).getAddressLine(0);
+                        pinCode=addressList.get(0).getPostalCode();
+
+                        location1.setText(fulladdress+", "+pinCode);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle){}
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {}
 
-            @Override
-            public void onProviderEnabled(String s){}
+                @Override
+                public void onProviderEnabled(String provider){}
 
-            @Override
-            public void onProviderDisabled(String s) {}
-        });
+                @Override
+                public void onProviderDisabled(String provider){}
+            });
+        }
     }
 
     private void setupTabIcons()

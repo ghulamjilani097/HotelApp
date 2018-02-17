@@ -48,12 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-//                registerUser();
-//                Toast.makeText(MainActivity.this, "jilani", Toast.LENGTH_SHORT).show();
+            public void onClick(View view)
+            {
+                 registerUser();
                 Intent i=new Intent(MainActivity.this,Homepage.class);
                 startActivity(i);
-                Log.d("dorami123", "onClick: "+"abc");
                 finish();
             }
         });
@@ -102,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getParams() throws AuthFailureError{
                 Map<String, String> params = new HashMap<String, String>();
-                //Toast.makeText(MainActivity.this, "Jilani", Toast.LENGTH_SHORT).show();
                 params.put("name", user1);
                 params.put("email", email1);
                 params.put("password", pass1);
@@ -111,9 +109,4 @@ public class MainActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-
-//    public  void loginUser()
-//    {
-//
-//    }*/
 }
