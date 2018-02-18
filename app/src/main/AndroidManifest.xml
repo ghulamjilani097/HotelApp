@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.memor.thinkers.jilani.hotelapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Splash" />
-        <activity android:name=".Homepage"></activity>
+        <activity android:name=".Homepage" />
+        <activity android:name=".Login"></activity>
     </application>
 
 </manifest>

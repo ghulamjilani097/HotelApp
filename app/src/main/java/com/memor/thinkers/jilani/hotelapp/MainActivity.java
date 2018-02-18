@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         signup=(Button)findViewById(R.id.signup);
-        login=(Button)findViewById(R.id.login);
+        login=(Button)findViewById(R.id.activitylogin);
         name=(EditText)findViewById(R.id.name);
         password=(EditText)findViewById(R.id.pass);
         email=(EditText)findViewById(R.id.email);
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(MainActivity.this,Homepage.class);
+                Intent i=new Intent(MainActivity.this,Login.class);
                 startActivity(i);
                 finish();
                 //loginUser();
@@ -78,17 +78,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                try {
-                    JSONArray jsonArray=new JSONArray(response);
-                    JSONObject jsonObject=jsonArray.getJSONObject(0);
-                    String abc=jsonObject.getString("msg");
-
-                    Toast.makeText(MainActivity.this, ""+abc, Toast.LENGTH_SHORT).show();
-                    Log.d("dorami123", "onResponse: "+abc);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    JSONArray jsonArray=new JSONArray(response);
+//                    JSONObject jsonObject=jsonArray.getJSONObject(0);
+//                    String abc=jsonObject.getString("msg");
+//
+//                    Toast.makeText(MainActivity.this, ""+abc, Toast.LENGTH_SHORT).show();
+//                    Log.d("dorami123", "onResponse: "+abc);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
 
             }
         }, new Response.ErrorListener() {

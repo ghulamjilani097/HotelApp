@@ -22,8 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/pass"
-        android:layout_alignStart="@+id/pass"
-        android:layout_marginBottom="27dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp"
         android:hint="Email" />
 
     <EditText
@@ -38,20 +39,27 @@
         android:id="@+id/signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/pass"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="47dp"
-        android:text="SignUp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
+        android:text="SignUp"/>
 
-    <Button
-        android:id="@+id/login"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/signup"
-        android:layout_alignBottom="@+id/signup"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="31dp"
-        android:text="Login" />
+        android:paddingTop="20dp"
+        android:id="@+id/Registered"
+        android:text="Already Registered?"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/signup"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:id="@+id/activitylogin"
+        android:layout_below="@+id/Registered"
+        android:layout_centerHorizontal="true"
+        android:text="LOGIN"/>
 
 </RelativeLayout>
