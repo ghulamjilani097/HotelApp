@@ -60,13 +60,12 @@ public class Login extends AppCompatActivity
                 emailstr=email.getText().toString();
                 passstr=loginpass.getText().toString();
 
-
-
                 try {
-                     JSONArray jsonArray = new JSONArray(response);
-                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    String msg = jsonObject.getString("success");
-                    Toast.makeText(Login.this, "jilani", Toast.LENGTH_SHORT).show();
+//                     JSONArray jsonArray = new JSONArray(response);
+//                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    JSONObject abc=new JSONObject(response);
+                    String msg = abc.getString("success");
+                    Toast.makeText(Login.this, "jilani"+msg, Toast.LENGTH_SHORT).show();
 //                    Log.d("Success","S:"+ msg);
 
                     if(msg.equals("1")) {
