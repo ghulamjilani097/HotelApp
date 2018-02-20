@@ -1,8 +1,10 @@
 package com.memor.thinkers.jilani.hotelapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,23 +28,25 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity
 {
-    EditText email,loginpass;
-    Button login;
-    RequestQueue requestQueue;
+    EditText btn_email, btn_password;
+    RequestQueue rq;
+    Button loginbtn;
     String loginUrl="https://hamarahotel.000webhostapp.com/registration/hotellogin.php";
-    String emailstr,passstr;
+    ProgressDialog progressDialog;
+    String name1,email1,password1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        email=findViewById(R.id.email);
-        loginpass=findViewById(R.id.loginpass);
-        requestQueue= Volley.newRequestQueue(this);
+        rq = Volley.newRequestQueue(Login.this);
+        loginbtn = (Button) findViewById(R.id.login);
+        btn_email = (EditText) findViewById(R.id.loginemail);
+        btn_password = (EditText) findViewById(R.id.loginpass);
+        progressDialog = new ProgressDialog(Login.this);
 
-        login=findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
+        loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loginUser();
@@ -50,51 +54,72 @@ public class Login extends AppCompatActivity
         });
     }
 
-    public void loginUser() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, loginUrl, new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response)
-            {
-//                Log.d("Success","S:");
-                emailstr=email.getText().toString();
-                passstr=loginpass.getText().toString();
+    public void loginUser()
+    {
+        email1 = btn_email.getText().toString();
+        password1 = btn_password.getText().toString();
 
-                try {
-//                     JSONArray jsonArray = new JSONArray(response);
-//                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    JSONObject abc=new JSONObject(response);
-                    String msg = abc.getString("success");
-                    Toast.makeText(Login.this, "jilani"+msg, Toast.LENGTH_SHORT).show();
-//                    Log.d("Success","S:"+ msg);
 
-                    if(msg.equals("1")) {
-                        Toast.makeText(Login.this, "Login Successfully.", Toast.LENGTH_SHORT).show();
-                        Intent i=new Intent(Login.this,Homepage.class);
-                        startActivity(i);
-                        finish();
+        if (TextUtils.isEmpty(email1)) {
+            btn_email.setError("Enter Your Email");
+            btn_email.requestFocus();
+            return;
+        }
+
+        if (TextUtils.isEmpty(password1)) {
+            btn_password.setError("Enter a password");
+            btn_password.requestFocus();
+            return;
+        }
+        progressDialog.setMessage("Please Wait.....");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("msg", "Register Response: " + response.toString());
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            String msg = jObj.getString("success");
+
+                            if (msg.equals("1"))
+                            {
+                                Toast.makeText(Login.this, "Response: "+response, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "Logged In Successfully!!", Toast.LENGTH_SHORT).show();
+                                Intent myIntent = new Intent(Login.this, Homepage.class);
+                                startActivity(myIntent);
+                                finish();
+                            }
+                            else
+                            {
+                                String errorMsg = jObj.getString("message");
+                                Toast.makeText(Login.this, errorMsg, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    else if(msg.equals("0")){
-                        Toast.makeText(Login.this, "Login Failed!!", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Login.this, "Oops, Something went wrong.", Toast.LENGTH_SHORT).show();
+                progressDialog.hide();
+                Log.e("msg", "Login Error: " + error.getMessage());
+                Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
-            public Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", emailstr);
-                params.put("password", passstr);
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email1);
+                params.put("password", password1);
                 return params;
             }
         };
-        requestQueue.add(stringRequest);
+        rq.add(stringRequest);
     }
 }

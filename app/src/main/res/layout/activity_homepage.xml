@@ -19,7 +19,7 @@ tools:context="com.memor.thinkers.jilani.hotelapp.Homepage">
             android:layout_height="wrap_content"
             android:fontFamily="roboto"
             android:gravity="center_vertical"
-            android:textSize="20dp"
+            android:textSize="10dp"
             android:text="Location"
             android:textColor="#FFFFFF" />
 
